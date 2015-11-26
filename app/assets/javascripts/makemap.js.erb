@@ -3,6 +3,7 @@ var Mapper = (function () {
 
 
     var allPoints;
+    var currPoints;
     var currColor;
     var apiUrl;
     var varList = null
@@ -114,6 +115,61 @@ var Mapper = (function () {
                                     "Wisconsin", 
                                     "Wyoming"]
 
+    
+    var state_codes = {
+                                   "1": "Alabama",
+                                   "2": "Alaska",
+                                   "4": "Arizona",
+                                   "5": "Arkansas",
+                                   "6": "California",
+                                   "8": "Colorado",
+                                   "9": "Connecticut",
+                                   "10": "Delaware",
+                                   "11": "District of Columbia",
+                                   "12": "Florida",
+                                   "13": "Georgia",
+                                   "15": "Hawaii",
+                                   "16": "Idaho",
+                                   "17": "Illinois",
+                                   "18": "Indiana",
+                                   "19": "Iowa",
+                                   "20": "Kansas",
+                                   "21": "Kentucky",
+                                   "22": "Louisiana",
+                                   "23": "Maine",
+                                   "24": "Maryland",
+                                   "25": "Massachusetts",
+                                   "26": "Michigan",
+                                   "27": "Minnesota",
+                                   "28": "Mississippi",
+                                   "29": "Missouri",
+                                   "30": "Montana",
+                                   "31": "Nebraska",
+                                   "32": "Nevada",
+                                   "33": "New Hampshire",
+                                   "34": "New Jersey",
+                                   "35": "New Mexico",
+                                   "36": "New York",
+                                   "37": "North Carolina",
+                                   "38": "North Dakota",
+                                   "39": "Ohio",
+                                   "40": "Oklahoma",
+                                   "41": "Oregon",
+                                   "42": "Pennsylvania",
+                                   "44": "Rhode Island",
+                                   "45": "South Carolina",
+                                   "46": "South Dakota",
+                                   "47": "Tennessee",
+                                   "48": "Texas",
+                                   "49": "Utah",
+                                   "50": "Vermont",
+                                   "51": "Virginia",
+                                   "53": "Washington",
+                                   "54": "West Virginia",
+                                   "55": "Wisconsin",
+                                   "56": "Wyoming"
+    }
+
     var mapId = null
     var datasetId = 1 //TODO: Make sure this is kept safe!
     var userId = 1
@@ -149,7 +205,8 @@ var Mapper = (function () {
         var filtermax = $( "#slider-range" ).slider( "values", 1);
 
 
-        var dataPoints = MapperBack.filterPoints(allPoints, filtermin, filtermax);
+        var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, null));
+        currPoints = dataPoints; //in makeslider
         drawMap(dataPoints);
       });
     }
@@ -217,13 +274,72 @@ var Mapper = (function () {
             }
         };
 
-        $("#idfilteringvar").append("<option> </option>")
+        $("#idfilteringvar").append("<option value=\"\"> None </option>")
         $("#idfilteringvar").append("<option value=\"\" disabled selected class=\"disabled\"> Select a Filter Variable </option>")
         $("#idvar").append("<option value=\"\" disabled selected class=\"disabled\"> Select a Display Variable </option>")
         startAutocomplete()
     }
 
+    /* makes histogram in scattercanvas */
+    var stateClickHandler = function(d) {
+        $("#scattercanvas svg").remove();
+        var filtermin = $("#slider-range").slider("values",0);
+        var filtermax = $( "#slider-range" ).slider( "values", 1);
+        var statePoints = MapperBack.filterPoints(allPoints, filtermin, filtermax, d.id);
+        var values = (statePoints.points).map(function(point) {return point.display_val});
+        var formatCount = d3.format(",.0f");
+        var minVal = Math.max(0, Math.floor(Math.min.apply(null, values)))
+        var maxVal = Math.floor(Math.max.apply(null, values))
+        var margin = {top: 30, right: 30, bottom: 30, left: 30},
+            width = $("#scattercanvas").width() - margin.left - margin.right,
+            height = $("#scattercanvas").height() - margin.top - margin.bottom;
+        var x = d3.scale.linear()
+            .domain([minVal, maxVal])
+            .range([0, width]);
+        var data = d3.layout.histogram()
+            .bins(x.ticks(9))
+            (values);
 
+        var y = d3.scale.linear()
+            .domain([0, d3.max(data, function(d) { return d.y; })])
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var svg = d3.select("#scattercanvas").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var bar = svg.selectAll(".bar")
+            .data(data)
+          .enter().append("g")
+            .attr("class", "bar")
+            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+        console.log(width);
+        console.log(x(data[0].dx));
+
+        bar.append("rect")
+            .attr("x", 1)
+            .attr("width", 20 - 1)
+            .attr("height", function(d) { return height - y(d.y); });
+
+        bar.append("text")
+            .attr("dy", ".75em")
+            .attr("y", 6)
+            .attr("x", 20 / 2)
+            .attr("text-anchor", "middle")
+            //.text(function(d) { return formatCount(d.y); });
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+    }
 
     var startAutocomplete = function() {
         // $("#idvar").autocomplete({
@@ -579,6 +695,7 @@ var Mapper = (function () {
     }
 
     var zoomMap = function (d, width, height, path) {
+        stateClickHandler(d)
         var x, y, k;
         var g = d3.select("g");
         var changed = false;
@@ -673,6 +790,7 @@ var Mapper = (function () {
         currColor = [10,10,100];
         var onSuccess = function(data) {
             allPoints = data;
+            currPoints = data;
             makeSlider();
             var dataPoints = MapperBack.processPoints(data);
             drawMap(dataPoints);
@@ -748,6 +866,7 @@ var Mapper = (function () {
         start: start,
         initialize: initialize,
         submitClickHandler: submitClickHandler,
+        stateClickHandler: stateClickHandler,
         submitHomeClickHandler: submitHomeClickHandler,
         startAutocomplete: startAutocomplete,
         resize: resize,

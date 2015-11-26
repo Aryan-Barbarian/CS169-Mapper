@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 20151124013548) do
   create_table "maps", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "dataset_id"
-    t.string   "name"
+    t.string   "name",             default: "DEFAULT"
     t.string   "shareable_url"
     t.string   "display_variable"
     t.string   "filter_variable"
     t.string   "styling"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.boolean  "is_example"
   end
 

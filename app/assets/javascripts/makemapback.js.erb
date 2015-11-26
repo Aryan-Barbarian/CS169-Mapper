@@ -55,22 +55,24 @@ var MapperBack = (function () {
     * @param  {json} data data in json format,
     * @param  {number} filtermin  
     * @param  {number} filtermax
+    * @param  {number} state
     * @return {list} data processed into a list
     */
-  var filterPoints = function(data, filtermin, filtermax)
+  var filterPoints = function(data, filtermin, filtermax, state)
   {
     var points = data.points;
     var newPoints = [];
     for (var i=0;i<points.length;i++) {
       var point = points[i];
-      console.log("filter_val: "+point.filter_val);
-      if (point.filter_val >= filtermin && point.filter_val <= filtermax) {
+      if (point.filter_val >= filtermin && point.filter_val <= filtermax
+            && (state == 0 || parseInt(point.location)/1000 == state)) {
         newPoints.push(point);
       }
     }
 
-    return processPoints({points: newPoints});
-  } 
+    return {points: newPoints};
+  }
+
 
   /**
     * process points
