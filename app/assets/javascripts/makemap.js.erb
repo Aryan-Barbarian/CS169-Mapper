@@ -373,7 +373,6 @@ var Mapper = (function () {
         // colors.range().pop();
 
         var keys = legend.selectAll('li.key').data(colors.range());
-        console.log(colors.range());
         var bucket_i = 0
         keys.enter().append('li')
             .attr('class', 'key')
@@ -589,16 +588,16 @@ var Mapper = (function () {
             y = centroid[1];
             k = 4;
             if (centered !== null) {
-                highlightState(true, centered)
+                highlightState(d, true, centered)
             }
             centered = d;
             changed = true;
-            highlightState(false, centered);
+            highlightState(d, false, centered);
         } else {
             x = width / 2;
             y = height / 2;
             k = 1;
-            highlightState(true, centered)
+            highlightState(d, true, centered)
             centered = null;
         }
         // g.selectAll("path")
@@ -611,7 +610,7 @@ var Mapper = (function () {
 
     }
 
-    var highlightState = function(isZoomed, centered) {
+    var highlightState = function(d, isZoomed, centered) {
         if (isZoomed) {
             d3.select("path[state=\"" + centered.id + "\"]")
                 .style("stroke-width", 1 + "px")
@@ -620,6 +619,14 @@ var Mapper = (function () {
             d3.select("path[state=\"" + centered.id + "\"]")
                 .style("stroke-width", 3 + "px")
                 .style("stroke", "black");
+
+            d3.select("svg").selectAll("path").sort(function(a, b) {
+                if (a.id != d.id) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            })
         }
     }
 
