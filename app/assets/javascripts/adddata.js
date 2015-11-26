@@ -9,10 +9,23 @@ var AddData = (function () {
   $(".fileSelect").change(function(e) 
   { 
     console.log(e.target.files[0]);
-    file = e.target.files[0];
-    addHeads();
+    console.log(validFile($(".fileSelect").val()));
+    if(validFile($(".fileSelect").val()))
+    {
+      clearHeads();
+      file = e.target.files[0];
+      addHeads();
+    }
+    else
+    {
+      window.alert("please select a valid csv file");
+    }
 
   });
+  var clearHeads = function()
+  {
+    $(".variableSelectors .varrow").html('');
+  }
   $(".uploadbutton").click(function(){
     createDataSet();
   });
@@ -70,17 +83,24 @@ var AddData = (function () {
       //console.log(toSend);
       for(var i = 0; i < vars.length; i++)
       {
-        //change this
-        if(i == 0)
+
+        var varName = vars[i];
+        var classType = $($(".varrow")[i+1])
+          .find("#classification").val();
+        classType = classType.toUpperCase();
+        var locSelect = $($(".varrow")[i+1])
+          .find("#locSelect").val();
+
+        if(classType == "LOCATION")
         {
-          columns.push({name: vars[i],
-                        column_type:"LOCATION",
-                        detail_level:"countyfull"});
+          columns.push({name: varName,
+                        column_type:classType,
+                        detail_level:locSelect});
         }
         else
         {
-          columns.push({name:vars[i],
-                        column_type:"VARIABLE"});
+          columns.push({name:varName,
+                        column_type:classType});
         }
       }
       //console.log(columns);
