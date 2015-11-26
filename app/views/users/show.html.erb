@@ -58,7 +58,7 @@
 			<ul>
 			<% @current_user.datasets.each do |dataset| %>
 
-				<li><%= dataset %>
+				<li><%= dataset.name %>
 
 				<span class="deleteDataset" onclick="myFunction()">
 				<%= link_to 'Delete Dataset', dataset, method: :delete %>
@@ -67,6 +67,12 @@
 			<% end %>
 			</ul>
 		</div>
+
+		<div class="row">
+			<!-- TO DO: Make this link to a new dataset -->
+			<a href="../datasets/new" class="btn btn-default col-xs-offset-4 col-xs-4 blockDisplay" role="button">Add Custom Data</a>
+		</div>
+
 		<script>
 			function myFunction() {
 			    location.reload();
