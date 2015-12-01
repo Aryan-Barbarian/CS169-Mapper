@@ -31,3 +31,24 @@ h2 {
 .leftContainer{
 	text-align: left;
 }
+
+input{
+	margin-bottom: 20px;
+}
+
+a {
+	color: #aaa;
+}
+
+a:hover {
+	background-color: transparent;
+	color: #000;
+}
+
+a:visited {
+	color: #aaa;
+}
+
+a:visited:hover {
+	color: #000;
+}

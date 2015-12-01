@@ -1,0 +1,35 @@
+// Place all the styles related to the user_input_data controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+input.fileSelect {
+	padding-top: 20px;
+	margin: 0 auto;
+	width: 88px;
+	font-size: 2.5em;
+
+}
+
+input.datasetname {
+	width: 200px;
+	height: 30px;
+	margin-top: 20px;
+
+}
+
+p {
+	margin-top: 20px;
+}
+
+.uploadButton {
+	height: 50px;
+}
+
+.noTop {
+	margin-top: 0px;
+}
+
+.locSelect {
+	margin-bottom: 20px;
+}
+

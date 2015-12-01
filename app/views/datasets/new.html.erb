@@ -1,27 +1,32 @@
 <%= render 'welcome/header' %>
-<h1>New Dataset</h1>
+<h1 class="center">New Dataset</h1>
 
 
+	<div class="center container">
 
-<%= link_to 'Back', datasets_path %>
-
-	<div>
 		<p>
-			Select file to create data set (put some instruction here about the file)
-		<p>
-		<form action='' method='POST' enctype='multipart/form-data'>
-			<input type="text" name="Dataset Name" value="name" class='datasetname'>
-	    	<input type='file' name='userFile' class='fileSelect'><br>
-	    	<input type='button' name='upload_btn' value='upload' class = 'uploadbutton'>
-		</form>
+			Select file to create data set, must be CSV.
+		</p>
+
+
+			<form action='' method='POST' enctype='multipart/form-data'>
+				<div class="row ">
+					<input type='file' name='userFile' class='fileSelect'>
+				</div>
+				<div class="row">
+					<input type="text" name="Dataset Name" value="name" class='datasetname col-xs-offset-5 blockDisplay'>
+				</div>
+			    <div class="row">
+			    	<input type='button' name='upload_btn' value='upload' class = 'uploadButton col-xs-offset-4 btn btn-info blockDisplay'>
+			    </div>
+		    	
+			</form>
+
 		<script type="text/javascript">
 			$(".submitbutton").click(function(){
 			  AddData.createDataSet();
 			});
 		</script>
-		
-		
-
 	</div>
 
 	<div class="variableSelectors container">
@@ -35,9 +40,7 @@
 	      		<p class="variable">Variable</p>
 	      	</div>
 			<div class="col-md-4">
-
-				<!-- <form action="#"> -->
- 
+				<p class="noTop">What type of data is in this column?</p>
 				<fieldset>
 					<select name="classification" id="classification">
 						<option selected="selected">Variable</option>
@@ -48,23 +51,22 @@
 			</div>
 			<div class="col-md-4">
 				<span class="extras variableExtras">
-					<fieldset>
-						<select name="nullSelect" id="nullSelect">
-							<option selected="selected">Not Null</option>
-							<option>Null</option>
-						</select>
-					</fieldset>
+					<p class="noTop">Are there any special null values for this variable?</p>
+					<input type="text" name="null value" value="" class='noTop'>
 				</span>
 				<span class="extras locExtras">
+					<p class="noTop">What kind of location data is this?</p>
 					<fieldset>
-						<select name="locSelect" id="locSelect">
-							<option selected="selected">countyfull</option>
+						<select name="locSelect" class="locSelect">
+							<option selected="selected">not location data</option>
+							<option>countyfull</option>
 							<option>countypartial</option>
 							<option>state</option>
 						</select>
 					</fieldset>
 				</span>
 			</div>
+
       	</div>
     	<%= javascript_include_tag "adddata.js"%>
 
