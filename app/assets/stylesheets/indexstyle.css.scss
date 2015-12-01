@@ -34,7 +34,7 @@ input[type="range"] {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 100;
 	font-size: 1.7em;
-	color: #000;
+	background-color: #fff;
 	padding-top: 20px;
 	text-decoration: none;
 }
@@ -43,15 +43,18 @@ body {
 	background-image: image-url('congruent_outline.png');
 }
 
-/*.row {
-	margin-left: 0px;
-	margin-right: 0px;
-}*/
-
 /*end of bootstrap fixes*/
+
+/*beginning of header fixes*/
+
+
+
+
+/*end of header fixes*/
 
 p {
     color: #aaa;
+    font-family: 'Raleway', sans-serif;
 }
 
 h1,
@@ -70,6 +73,10 @@ h6 {
     font-weight: 100;
 }
 
+a:hover {
+	background-color: #fff;
+}
+
 
 #canvas {
 	background-color: #ccc;
@@ -81,14 +88,14 @@ h6 {
 
 #barcanvas {
 	background-color: #8EA86C;
-	min-height: 250px;
+	min-height: 350px;
 	border-bottom: thick solid #000;
 
 }
 
 #scattercanvas {
 	background-color: #4D642D;
-	min-height: 250px;
+	min-height: 150px;
 
 }
 
@@ -199,3 +206,6 @@ div ul li{
   pointer-events: all;
 }
 
+.firstContainer select {
+	height: 50px;
+}

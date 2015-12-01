@@ -12,14 +12,17 @@ var MapperBack = (function () {
     var rdelta = (255-baseColor[0])/n;
     var gdelta = (255-baseColor[1])/n;
     var bdelta = (255-baseColor[2])/n;
-    for(var i=0; i<divisions;i++)
+    for(var i=1; i<divisions+1;i++)
     {
-      var rval = Math.floor(255 - rdelta * i);
-      var gval = Math.floor(255 - gdelta * i);
-      var bval = Math.floor(255 - bdelta * i);
-      var c = rval*256*256 + gval * 256 + bval;
+      var rval = Math.max(0, Math.floor(255 - rdelta * i)).toString(16);
+      var gval = Math.max(0, Math.floor(255 - gdelta * i)).toString(16);
+      var bval = Math.max(0, Math.floor(255 - bdelta * i)).toString(16);
+      rval.length < 2 ? rval = "0" + rval: rval;
+      gval.length < 2 ? gval = "0" + gval: gval;
+      bval.length < 2 ? bval = "0" + bval: bval;
+      var c = rval + gval + bval;
 
-      colors.push("#" + c.toString(16));
+      colors.push("#" + c);
     }
     return colors;
   }
@@ -37,11 +40,11 @@ var MapperBack = (function () {
     rdelta = (255-baseColor[0])/n;
     gdelta = (255-baseColor[1])/n;
     bdelta = (255-baseColor[2])/n;
-    for(var i=0; i<divisions;i++)
+    for(var i=1; i<divisions+1;i++)
     {
-      colors.push([Math.floor(255 - rdelta * i),
-                   Math.floor(255 - gdelta * i),
-                   Math.floor(255 - bdelta * i)])
+      colors.push([Math.max(0, Math.floor(255 - rdelta * i)),
+                   Math.max(0, Math.floor(255 - gdelta * i)),
+                   Math.max(0, Math.floor(255 - bdelta * i))])
     }
     return colors;
   }
@@ -52,22 +55,24 @@ var MapperBack = (function () {
     * @param  {json} data data in json format,
     * @param  {number} filtermin  
     * @param  {number} filtermax
+    * @param  {number} state
     * @return {list} data processed into a list
     */
-  var filterPoints = function(data, filtermin, filtermax)
+  var filterPoints = function(data, filtermin, filtermax, state)
   {
     var points = data.points;
     var newPoints = [];
     for (var i=0;i<points.length;i++) {
       var point = points[i];
-      console.log("filter_val: "+point.filter_val);
-      if (point.filter_val >= filtermin && point.filter_val <= filtermax) {
+      if (point.filter_val >= filtermin && point.filter_val <= filtermax
+            && (state == 0 || parseInt(point.location)/1000 == state)) {
         newPoints.push(point);
       }
     }
 
-    return processPoints({points: newPoints});
-  } 
+    return {points: newPoints};
+  }
+
 
   /**
     * process points

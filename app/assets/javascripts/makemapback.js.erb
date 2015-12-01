@@ -60,6 +60,7 @@ var MapperBack = (function () {
     */
   var filterPoints = function(data, filtermin, filtermax, state)
   {
+    console.log(filtermin);
     var points = data.points;
     var newPoints = [];
     for (var i=0;i<points.length;i++) {
@@ -67,6 +68,30 @@ var MapperBack = (function () {
       if (point.filter_val >= filtermin && point.filter_val <= filtermax
             && (state == 0 || parseInt(point.location)/1000 == state)) {
         newPoints.push(point);
+      }
+
+      if (state!=0) {
+        if (point.weight > 5000) newPoints.push(point);
+        if (point.weight > 10000) newPoints.push(point);
+        if (point.weight > 15000) newPoints.push(point);
+        if (point.weight > 20000) newPoints.push(point);
+        if (point.weight > 25000) newPoints.push(point);
+        if (point.weight > 30000) newPoints.push(point);
+        if (point.weight > 35000) newPoints.push(point);
+        if (point.weight > 40000) newPoints.push(point);
+        if (point.weight > 45000) newPoints.push(point);
+        if (point.weight > 50000) newPoints.push(point);
+        if (point.weight > 55000) newPoints.push(point);
+        if (point.weight > 60000) newPoints.push(point);
+        if (point.weight > 65000) newPoints.push(point);
+        if (point.weight > 70000) newPoints.push(point);
+        if (point.weight > 75000) newPoints.push(point);
+        if (point.weight > 80000) newPoints.push(point);
+        if (point.weight > 85000) newPoints.push(point);
+        if (point.weight > 90000) newPoints.push(point);
+        if (point.weight > 95000) newPoints.push(point);
+        if (point.weight > 100000) newPoints.push(point);
+
       }
     }
 

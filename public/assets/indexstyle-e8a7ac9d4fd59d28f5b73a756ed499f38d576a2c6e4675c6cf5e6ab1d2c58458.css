@@ -1,0 +1,272 @@
+/*Below is stuff for overwriting bootstrap*/
+/* line 4, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.center {
+  text-align: center;
+}
+
+/* line 8, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.list-inline {
+  margin-left: 0px;
+}
+
+/* line 12, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.navbar-right {
+  margin-right: 20px;
+}
+
+/* line 16, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.navbar-text {
+  margin-right: 20px;
+}
+
+/* line 20, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.container {
+  padding: 0;
+  /*margin: 0;*/
+}
+
+/* line 25, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+input[type="range"] {
+  width: 33.3%;
+  display: block;
+}
+
+/* line 30, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.navbar-header {
+  float: none;
+}
+
+/* line 34, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.navbar-link a {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  font-size: 1.7em;
+  color: #000;
+  padding-top: 20px;
+  text-decoration: none;
+}
+
+/* line 43, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+body {
+  background-image: url(/assets/congruent_outline-982cfbbf82146356e0d12ba5e74dd146e6fd6bd485d915c79b49673e0c72007b.png);
+}
+
+/*.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}*/
+/*end of bootstrap fixes*/
+/* line 54, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+p {
+  color: #aaa;
+}
+
+/* line 58, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 100;
+  color: #aaa;
+}
+
+/* line 68, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+* {
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+}
+
+/* line 75, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#canvas {
+  background-color: #ccc;
+  float: left;
+  min-height: 500px;
+  border-right: thick solid #000;
+}
+
+/* line 83, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#barcanvas {
+  background-color: #8EA86C;
+  min-height: 250px;
+  border-bottom: thick solid #000;
+}
+
+/* line 90, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#scattercanvas {
+  background-color: #4D642D;
+  min-height: 250px;
+}
+
+/* line 97, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+
+/* line 101, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-1 {
+  width: 8.33%;
+}
+
+/* line 102, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-2 {
+  width: 16.66%;
+}
+
+/* line 103, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-3 {
+  width: 25%;
+}
+
+/* line 104, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-4 {
+  width: 33.33%;
+}
+
+/* line 105, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-5 {
+  width: 41.66%;
+}
+
+/* line 106, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-6 {
+  width: 50%;
+}
+
+/* line 107, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-7 {
+  width: 58.33%;
+}
+
+/* line 108, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-8 {
+  width: 66.66%;
+}
+
+/* line 109, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-9 {
+  width: 75%;
+}
+
+/* line 110, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-10 {
+  width: 83.33%;
+}
+
+/* line 111, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-11 {
+  width: 91.66%;
+}
+
+/* line 112, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.col-12 {
+  width: 100%;
+}
+
+/* line 115, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.hidden {
+  visibility: hidden;
+}
+
+/* line 119, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.blockDisplay {
+  margin-top: 25px;
+  width: 33.3%;
+  display: block;
+}
+
+/* line 125, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.secondDisplay {
+  max-width: 15%;
+}
+
+/* line 129, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.titleText {
+  text-align: center;
+  color: #aaa;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+}
+
+/* line 136, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+li {
+  color: #aaa;
+}
+
+/* line 140, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#addCustomBtn {
+  color: #000;
+}
+
+/* line 144, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#inText {
+  text-align: center;
+}
+
+/* line 148, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#shareButton {
+  color: #aaa;
+  float: right;
+}
+
+/* line 153, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.titleCol {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* line 159, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.titleColText {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #aaa;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  padding: 0px;
+}
+
+/* line 168, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.ui-autocomplete {
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* line 174, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.titleInput {
+  height: 3em;
+  padding-left: 10px;
+}
+
+/* line 179, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#idSubmit {
+  width: 100px;
+  height: 3em;
+}
+
+/* line 184, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+#leftContainer {
+  text-align: left;
+}
+
+/* line 188, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+div ul li {
+  text-align: center;
+  list-style-type: none;
+}
+
+/* line 193, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.deleteDataset {
+  color: #fff;
+  padding: 10px;
+}
+
+/* line 198, /home/aryan/classes/cs169/CS169-Mapper/app/assets/stylesheets/indexstyle.css.scss */
+.background {
+  fill: none;
+  pointer-events: all;
+}

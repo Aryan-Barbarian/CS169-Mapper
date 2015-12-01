@@ -95,3 +95,12 @@ QUnit.test( "good file test", function( assert ) {
   assert.equal(valid, false,  "ensure that the program identifies correct file format");
 
 });
+
+QUnit.test( "get vars in csvfile test", function( assert ) {
+  var path = "/testCSV/sampledata.csv"
+  var vars = AddData.csvVars(path);
+  var correct = 'head1,head2,head3,head4,head5'
+  //console.log(processed);
+  assert.equal(vars, correct, "correct variables read from csv");
+
+});

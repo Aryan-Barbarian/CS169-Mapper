@@ -11,13 +11,13 @@ var Mapper = (function () {
     var datasets = null
 
     var fipsState = {
-       "1": "Alabama",
-       "2": "Alaska",
-       "4": "Arizona",
-       "5": "Arkansas",
-       "6": "California",
-       "8": "Colorado",
-       "9": "Connecticut",
+       "01": "Alabama",
+       "02": "Alaska",
+       "04": "Arizona",
+       "05": "Arkansas",
+       "06": "California",
+       "08": "Colorado",
+       "09": "Connecticut",
        "10": "Delaware",
        "11": "District of Columbia",
        "12": "Florida",
@@ -205,7 +205,7 @@ var Mapper = (function () {
         var filtermax = $( "#slider-range" ).slider( "values", 1);
 
 
-        var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, 0));
+        var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, null));
         currPoints = dataPoints; //in makeslider
         drawMap(dataPoints);
       });
@@ -280,13 +280,9 @@ var Mapper = (function () {
         startAutocomplete()
     }
 
-    var clearHist = function() {
-        $("#barcanvas svg").remove();
-    }
-
-    /* makes histogram in barcanvas */
+    /* makes histogram in scattercanvas */
     var stateClickHandler = function(d) {
-        clearHist();
+        $("#scattercanvas svg").remove();
         var filtermin = $("#slider-range").slider("values",0);
         var filtermax = $( "#slider-range" ).slider( "values", 1);
         var statePoints = MapperBack.filterPoints(allPoints, filtermin, filtermax, d.id);
@@ -295,8 +291,8 @@ var Mapper = (function () {
         var minVal = Math.max(0, Math.floor(Math.min.apply(null, values)))
         var maxVal = Math.floor(Math.max.apply(null, values))
         var margin = {top: 30, right: 30, bottom: 30, left: 30},
-            width = $("#barcanvas").width() - margin.left - margin.right,
-            height = $("#barcanvas").height() - margin.top - margin.bottom - 100;
+            width = $("#scattercanvas").width() - margin.left - margin.right,
+            height = $("#scattercanvas").height() - margin.top - margin.bottom;
         var x = d3.scale.linear()
             .domain([minVal, maxVal])
             .range([0, width]);
@@ -312,7 +308,7 @@ var Mapper = (function () {
             .scale(x)
             .orient("bottom");
 
-        var svg = d3.select("#barcanvas").append("svg")
+        var svg = d3.select("#scattercanvas").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
@@ -323,6 +319,9 @@ var Mapper = (function () {
           .enter().append("g")
             .attr("class", "bar")
             .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+        console.log(width);
+        console.log(x(data[0].dx));
 
         bar.append("rect")
             .attr("x", 1)
@@ -381,7 +380,6 @@ var Mapper = (function () {
 
     var submitClickHandler = function() {
         $( "body" ).on( "click", "#idsubmit", function() {
-            clearHist();
             //set values
             apiUrl = MapperBack.getapiUrl();
             displayval = $("#idvar").val();
@@ -640,7 +638,6 @@ var Mapper = (function () {
 
     var drawUSA = function(res, canvas, quantize, rateById)
     {   
-        clearHist();
         var background = $(canvas);
         var width = background.width();
         var height = background.height();
@@ -674,9 +671,7 @@ var Mapper = (function () {
                 .enter().append("path")
                     .attr("class", function(d) { return quantize(rateById.get(d.id)); })
                     .attr("d", path)
-                    .on("mouseover", function(d) { stateHover(d, rateById.get(d.id), true) })
-                    .on("mouseout", function(d) { stateHover(d, rateById.get(d.id), false) })
-                    .on("click", function(d) { zoomMap(d, width, height, path, rateById.get(d.id)) })
+                    .on("click", function(d) { zoomMap(d, width, height, path) })
                     .attr("state",function(d) { return d.id })
                     // .call(d3.helper.tooltip(
                     //     function(d, i){
@@ -699,45 +694,27 @@ var Mapper = (function () {
         return svg;
     }
 
-    var stateHover = function(d, stateValue, hovered) {
-        if (centered == null) {
-            var barcanvas = d3.select("#barcanvas");
-            if (hovered == true) {
-                barcanvas.append("p").text(fipsState[d.id]).style("color", "black");
-                barcanvas.append("p").text(displayval + ":" + stateValue).style("color", "black");
-                barcanvas.append("p").text("Click state for more information.").style("color", "black");
-            } else {
-                barcanvas.selectAll("p").remove();
-            }
-        }
-    }
-
-    var zoomMap = function (d, width, height, path, stateValue) {
-        if (d) {
-            var barcanvas = d3.select("#barcanvas");
-            barcanvas.selectAll("p").remove();
-            barcanvas.append("p").text(fipsState[d.id]).style("color", "black");
-            barcanvas.append("p").text(displayval + ":" + stateValue).style("color", "black");
-            barcanvas.append("p").text("Click state for more information.").style("color", "black");
-            stateClickHandler(d)
-        }
+    var zoomMap = function (d, width, height, path) {
+        stateClickHandler(d)
         var x, y, k;
         var g = d3.select("g");
-        if (centered != null) {
-            highlightState(d, true, centered)
-        }
+        var changed = false;
         if (d && centered !== d) {
             var centroid = path.centroid(d);
             x = centroid[0];
             y = centroid[1];
             k = 4;
+            if (centered !== null) {
+                highlightState(d, true, centered)
+            }
             centered = d;
+            changed = true;
             highlightState(d, false, centered);
         } else {
             x = width / 2;
             y = height / 2;
             k = 1;
-            $("#barcanvas svg").remove();
+            highlightState(d, true, centered)
             centered = null;
         }
         // g.selectAll("path")

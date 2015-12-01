@@ -1,0 +1,23 @@
+.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+[class*="col-"] {
+    padding: 0px;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
