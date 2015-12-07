@@ -209,7 +209,7 @@ var Mapper = (function () {
       var filtermin = $("#slider-range").slider("values",0);
       var filtermax = $( "#slider-range" ).slider( "values", 1);
 
-      var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, 0));
+      var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, 0,1));
       currPoints = dataPoints; //in makeslider
       drawMap(dataPoints);
     });
@@ -291,9 +291,10 @@ var Mapper = (function () {
     /* makes histogram in barcanvas */
     var stateClickHandler = function(d) {
         clearHist();
+        var twobars = (displayval == "SEX" || displayval == "EMPLOYMENT" || displayval == "LABOR_PARTICIPATION");
         var filtermin = $("#slider-range").slider("values",0);
         var filtermax = $( "#slider-range" ).slider( "values", 1);
-        var statePoints = MapperBack.filterPoints(allPoints, filtermin, filtermax, d.id);
+        var statePoints = MapperBack.filterPoints(allPoints, filtermin, filtermax, d.id, twobars ? 1000 : 1);
         var values = (statePoints.points).map(function(point) {return point.display_val});
         var formatCount = d3.format(",.0f");
         var minVal = Math.max(0, Math.floor(Math.min.apply(null, values)))
@@ -305,7 +306,7 @@ var Mapper = (function () {
             .domain([minVal, maxVal])
             .range([0, width]);
         
-        var twobars = (displayval == "SEX" || displayval == "EMPLOYMENT" || displayval == "LABOR_PARTICIPATION");
+        
 
         var data = d3.layout.histogram()
             .bins(x.ticks(twobars ? 7 : 9))
