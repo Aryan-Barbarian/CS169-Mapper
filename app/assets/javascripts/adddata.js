@@ -29,7 +29,7 @@ var AddData = (function () {
   {
     $(".variableSelectors .varrow").html('');
   }
-  $(".uploadbutton").click(function(){
+  $(".uploadButton").click(function(){
     createDataSet();
   });
   var addHeads = function()
@@ -100,6 +100,7 @@ var AddData = (function () {
         {
           columns.push({name: varName,
                         column_type:classType,
+                        location_type:locSelect,
                         detail_level:locSelect});
         }
         else
