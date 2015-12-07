@@ -1,4 +1,4 @@
-QUnit.test( "hello test", function( assert ) {
+  QUnit.test( "hello test", function( assert ) {
   assert.ok( 1 == "1", "Passed!" );
 });
 QUnit.test( "processed test", function( assert ) {
@@ -35,8 +35,8 @@ QUnit.test( "Filter Points test", function( assert ) {
       {"location":"44008","display_val":"1","filter_val":"18","weight":9150}],
       "num_points":2,
       "location_type":"COUNTYFIPS"};
-  var filtered = MapperBack.filterPoints(sampleData, 10,20);
-  var correctData = [{"location": "44008", "value":1}];
+  var filtered = MapperBack.filterPoints(sampleData, 10,20, 0);
+  var correctData = {points:[{"location":"44008","display_val":"1","filter_val":"18","weight":9150}]};
   //console.log(processed);
   assert.deepEqual(filtered, correctData,  "filter points first test");
 
@@ -45,7 +45,7 @@ QUnit.test( "Filter Points test", function( assert ) {
 QUnit.test( "Get colors test", function( assert ) {
   //feel free to change this
   var colors = MapperBack.colorDivs([255,127,0], 3);
-  var correctColors = [[0,0,0],[255/2, 127/2, 0], [255,127,0]];
+  var correctColors = [[255,191,127],[255,127,0],[255,63,0]];
   //console.log(processed);
   assert.deepEqual(colors, correctColors,  "make sure correct color divs are created");
 
@@ -63,7 +63,7 @@ QUnit.test( "Colors length", function( assert ) {
 QUnit.test( "Hex Colors", function( assert ) {
   //feel free to change this
   var colors = MapperBack.hexColorDivs([255,0,0], 2);
-  var correct = ["#ffffff","#ff0000"]
+  var correct = ["#ff0000","#ff0000"]
   //console.log(processed);
   assert.deepEqual(colors, correct,  "make sure correct num of colors are created");
 

@@ -70,11 +70,15 @@
 			</select>
 		</div>
 		<div class='col-2'>
-			<h2 id='inText' class="titleColText">, Filter By </h2>
+			<h2 id='inText' class="titleColText">Filtering By </h2>
 		</div>
 		<div class='col-2 titleCol'>
 			<select class="titleInput" placeholder="Filtering Variable" id="idfilteringvar">
 			</select>
+		</div>
+
+		<div class='col-1'>
+			<h2 id='inText' class="titleColText">Using</h2>
 		</div>
 
 		<div class='col-2 titleCol'>
@@ -82,7 +86,7 @@
 			</select>	
 		</div>
 
-		<div class='col-2 titleCol'>
+		<div class='col-1 titleCol'>
 			<button type="submit" class="btn btn-default titleInput" id="idsubmit">
 				Submit
 			</button>
@@ -104,12 +108,14 @@
 			</div>
 
 			<div id="scattercanvas" class="col-3">
-				<div class="row">
+				<div id="slider-none" class="row hidden">
+					<p>Select a filtering variable to enable filtering slider.</p>
+				</div>
+				<div id="slider" class="row hidden">
+					<p>Select filtering variable value range</p>
 					<input type="text" id="range-display" readonly/>
-					<br>
 					<div id="slider-range" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
 					</div>
-					<br>
 					<button id="select-range">Select range</button>
 				</div>
 

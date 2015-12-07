@@ -183,33 +183,37 @@ var Mapper = (function () {
     var displayPoints = (allPoints.points).map(function(point) { return point.filter_val })
     var minVal = Math.max(0, Math.floor(Math.min.apply(null, displayPoints)))
     var maxVal = Math.floor(Math.max.apply(null, displayPoints))
-
-
-    $( "#slider-range" ).slider({
-        range: true,
-        min: minVal,
-        max: maxVal,
-        values: [ minVal, maxVal ],
-        slide: function( event, ui ) {
-          $( "#range-display" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        }
-      });
-      $( "#range-display" ).val($( "#slider-range" ).slider( "values", 0 ) +
-        " - " + $( "#slider-range" ).slider( "values", 1 ) );
-
-      $('#select-range').on("click", function() {
-      });
-      
-      $('#select-range').on("click", function() {
-        var filtermin = $("#slider-range").slider("values",0);
-        var filtermax = $( "#slider-range" ).slider( "values", 1);
-
-
-        var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, 0));
-        currPoints = dataPoints; //in makeslider
-        drawMap(dataPoints);
-      });
+    if (filterval == "" || filterval == undefined || filterval == "None") {
+      $("#slider").addClass("hidden");
+      $("#slider-none").removeClass("hidden");
+    } else {
+      $("#slider").removeClass("hidden");
+      $("#slider-none").addClass("hidden");
     }
+    $( "#slider-range" ).slider({
+      range: true,
+      min: minVal,
+      max: maxVal,
+      values: [ minVal, maxVal ],
+      slide: function( event, ui ) {
+        $( "#range-display" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    $( "#range-display" ).val($( "#slider-range" ).slider( "values", 0 ) +
+      " - " + $( "#slider-range" ).slider( "values", 1 ) );
+
+    $('#select-range').on("click", function() {
+    });
+    
+    $('#select-range').on("click", function() {
+      var filtermin = $("#slider-range").slider("values",0);
+      var filtermax = $( "#slider-range" ).slider( "values", 1);
+
+      var dataPoints = MapperBack.processPoints(MapperBack.filterPoints(allPoints, filtermin, filtermax, 0));
+      currPoints = dataPoints; //in makeslider
+      drawMap(dataPoints);
+    });
+  }
 
 
     var loadDatasets = function() {
@@ -275,8 +279,8 @@ var Mapper = (function () {
         };
 
         $("#idfilteringvar").append("<option value=\"\"> None </option>")
-        $("#idfilteringvar").append("<option value=\"\" disabled selected class=\"disabled\"> Select a Filter Variable </option>")
-        $("#idvar").append("<option value=\"\" disabled selected class=\"disabled\"> Select a Display Variable </option>")
+        $("#idfilteringvar").append("<option value=\"\" disabled selected class=\"disabled\"> Filter Variable </option>")
+        $("#idvar").append("<option value=\"\" disabled selected class=\"disabled\"> Display Variable </option>")
         startAutocomplete()
     }
 
@@ -300,8 +304,11 @@ var Mapper = (function () {
         var x = d3.scale.linear()
             .domain([minVal, maxVal])
             .range([0, width]);
+        
+        var twobars = (displayval == "SEX" || displayval == "EMPLOYMENT" || displayval == "LABOR_PARTICIPATION");
+
         var data = d3.layout.histogram()
-            .bins(x.ticks(9))
+            .bins(x.ticks(twobars ? 7 : 9))
             (values);
 
         var y = d3.scale.linear()
@@ -326,7 +333,7 @@ var Mapper = (function () {
 
         bar.append("rect")
             .attr("x", 1)
-            .attr("width", 20 - 1)
+            .attr("width", twobars ? 40 : 20)
             .attr("height", function(d) { return height - y(d.y); });
 
         bar.append("text")
@@ -340,6 +347,44 @@ var Mapper = (function () {
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
+
+        if (displayval == "INCOME") {
+          $('.tick > text').text(function(index) {
+            //return $(this).text();
+            var oldstr = $(this).text();
+            var newstr = (index == 0) ? '0' : oldstr.slice(0,oldstr.indexOf(',')) + 'K';
+            console.log(newstr);
+            return newstr;
+          });
+
+          $(".tick > text").css({
+            fontSize: 10
+          });
+        }
+
+        if (twobars) {
+          $('.tick > text').text(function(index) {
+            //return $(this).text();
+            var zero = 'Male';
+            var one = 'Female';
+            if (displayval == "EMPLOYMENT") {
+              zero = "Unemployed"
+              one = "Employed"
+            }
+            if (displayval == "LABOR_PARTICIPATION") {
+              zero = "Inactive"
+              one = "Active"
+            }
+            if (index == 1) return zero;
+            if (index == 9) return one;
+            return '';
+          });
+
+          $('.tick').each(function(index) {
+            if (!(index == 1 || index == 9) ) $(this).remove();
+          });
+        }
+
     }
 
     var startAutocomplete = function() {
@@ -500,8 +545,8 @@ var Mapper = (function () {
                 bucket_i += 1
                 var r = colors.invertExtent(d);
                 var curr_range = data_quantize.invertExtent(bucket)
-                var first = Math.round(curr_range[0]*100)/100;
-                var second = Math.round(curr_range[1]*100)/100;
+                var first = (Math.round(curr_range[0]*100)/100).toFixed(2);
+                var second = (Math.round(curr_range[1]*100)/100).toFixed(2);
                 return first + " - " + second;
             });
         d3.selectAll('li.key')
@@ -702,12 +747,13 @@ var Mapper = (function () {
     var stateHover = function(d, stateValue, hovered) {
         if (centered == null) {
             var barcanvas = d3.select("#barcanvas");
+            barcanvas.selectAll("p").remove();
             if (hovered == true) {
-                barcanvas.append("p").text(fipsState[d.id]).style("color", "black");
-                barcanvas.append("p").text(displayval + ":" + stateValue).style("color", "black");
-                barcanvas.append("p").text("Click state for more information.").style("color", "black");
+                barcanvas.append("p").text(fipsState[d.id]);
+                barcanvas.append("p").text(displayval + ":" + stateValue.toFixed(2));
+                barcanvas.append("p").text("Click state for more information.");
             } else {
-                barcanvas.selectAll("p").remove();
+                barcanvas.append("p").text("Hover over state for basic information.");
             }
         }
     }
@@ -716,9 +762,9 @@ var Mapper = (function () {
         if (d) {
             var barcanvas = d3.select("#barcanvas");
             barcanvas.selectAll("p").remove();
-            barcanvas.append("p").text(fipsState[d.id]).style("color", "black");
-            barcanvas.append("p").text(displayval + ":" + stateValue).style("color", "black");
-            barcanvas.append("p").text("Click state for more information.").style("color", "black");
+            barcanvas.append("p").text(fipsState[d.id]);
+            barcanvas.append("p").text(displayval + ":" + stateValue.toFixed(2));
+            barcanvas.append("p").text("Click state to unzoom, or click another state to change state.");
             stateClickHandler(d)
         }
         var x, y, k;

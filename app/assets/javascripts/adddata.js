@@ -1,5 +1,6 @@
 var AddData = (function () {
 
+
   var varTemplate;
   //wait for change and determine if valid file
   var file = [];
@@ -11,7 +12,9 @@ var AddData = (function () {
     console.log(e.target.files[0]);
     console.log(validFile($(".fileSelect").val()));
     if(validFile($(".fileSelect").val()))
-    {
+    { 
+      $("#varLabel").removeClass("hidden");
+      $("#opLabel").removeClass("hidden");
       clearHeads();
       file = e.target.files[0];
       addHeads();
@@ -72,6 +75,7 @@ var AddData = (function () {
     //toSend.append('name', $(".datasetname").val());
     //toSend.append('datafile_raw', file);
 
+
     read.readAsBinaryString(file)
     read.onloadend = function() 
     {
@@ -80,6 +84,7 @@ var AddData = (function () {
       vars = textToVars(rawText);
       //console.log(vars);
 
+      
       //console.log(toSend);
       for(var i = 0; i < vars.length; i++)
       {

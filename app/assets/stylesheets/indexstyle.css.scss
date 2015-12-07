@@ -53,7 +53,7 @@ body {
 /*end of header fixes*/
 
 p {
-    color: #aaa;
+	color: #aaa;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -81,22 +81,29 @@ a:hover {
 #canvas {
 	background-color: #ccc;
     float: left;
-    min-height: 500px;
+    height: 500px;
     border-right: thick solid #000;
 
 }
 
 #barcanvas {
 	background-color: #8EA86C;
-	min-height: 350px;
+	height: 350px;
 	border-bottom: thick solid #000;
+	padding-left: 10px;
+    padding-top: 10px;
 
 }
 
 #scattercanvas {
 	background-color: #4D642D;
-	min-height: 150px;
+	height: 150px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
+#scattercanvas input {
+	text-align: center;
 }
 
 
@@ -160,6 +167,7 @@ li {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	text-align: center;
+	padding-left: 10px;
 }
 
 .titleColText {
@@ -187,6 +195,8 @@ li {
 	height: 3em;
 }
 
+
+
 #leftContainer{
 	text-align: left;
 }
@@ -209,3 +219,31 @@ div ul li{
 .firstContainer select {
 	height: 50px;
 }
+
+#slider-none {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#barcanvas p {
+	color: #000000;
+	font-size: 120%;
+}
+
+#scattercanvas p {
+	color: #000000;
+	font-size: 120%;
+}
+
+#colorvar {
+	top: 4px;
+}
+
+#range-display {
+	margin-bottom: 5px;
+}
+
+#select-range {
+	margin-top: 5px;
+}
+
